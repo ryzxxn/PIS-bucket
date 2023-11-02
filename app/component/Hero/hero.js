@@ -33,7 +33,9 @@ function upload()
     else{
     axios.post('https://uploadio.vercel.app/api/postImage', data)
     }
-    window.location.reload()
+    setTimeout(() => {
+        window.location.reload()
+      }, 2000);
 }
 
   return (
