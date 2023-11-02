@@ -31,9 +31,9 @@ function upload()
         console.log('image is not uploaded');
     }
     else{
-    axios.post('https://uploadio.netlify.app/api/postImage', data)
+    axios.post('https://uploadio.vercel.app/api/postImage', data)
     }
-    window.location.reload()
+    // window.location.reload()
 }
 
   return (
