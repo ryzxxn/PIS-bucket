@@ -31,7 +31,7 @@ function upload()
         console.log('image is not uploaded');
     }
     else{
-    axios.post('http://localhost:3000/api/postImage', data)
+    axios.post('https://uploadio.netlify.app/api/postImage', data)
     }
     window.location.reload()
 }

@@ -9,7 +9,7 @@ export default function page() {
 
     useEffect(() => {
     async function fetchdata(){
-        const response = await axios.get(`http://localhost:3000/api/Images`, {
+        const response = await axios.get(`https://uploadio.netlify.app/api/Images`, {
           headers: {
             'Cache-Control': 'no-store',
           },
