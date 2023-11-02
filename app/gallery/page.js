@@ -17,11 +17,6 @@ export default function page() {
         setImagecache(response.data)
     }
     fetchdata()
-    setTimeout(() => {
-      if (ImageCache) {
-        print()
-    }
-    }, 5000);
 }, []);
 
 ///print images
@@ -37,6 +32,10 @@ for (let index = 0; index < ImageCache.length; index++) {
         </div>
     )
     }
+}
+
+if (ImageCache) {
+    print()
 }
 
   return (
