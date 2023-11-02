@@ -35,7 +35,7 @@ function upload()
     }
     setTimeout(() => {
         window.location.reload()
-      }, 2000);
+      }, 5000);
 }
 
   return (
