@@ -11,7 +11,7 @@ export default function page() {
     async function fetchdata(){
         const response = await axios.get(`https://uploadio.vercel.app/api/Images`, {
           headers: {
-            'Cache-Control': 'no-store',
+            'Cache-Control': 'no-cache',
           },
         });
         setImagecache(response.data)
