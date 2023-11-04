@@ -41,7 +41,7 @@ if (ImageCache) {
   return (
     <>
     <div className='image_container'>
-      <p>{ImageCache.length}</p>
+      <p className='image_count'>{ImageCache.length+1}</p>
         {images}
     </div>
     </>

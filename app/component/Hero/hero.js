@@ -48,6 +48,8 @@ export default function Hero() {
 
                 axios.post('https://uploadio.vercel.app/api/postImage', postData)
 
+                window.location.reload()
+
                 } else {
                 console.log("Image uploaded, but the URL couldn't be retrieved.")
                 }

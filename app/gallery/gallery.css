@@ -8,5 +8,27 @@ img{
     gap: 5px;
     flex-wrap: wrap;
     justify-content: left;
-    padding: 10px 3px;
+    padding: 30px 3px;
+}
+
+p{
+    color: black;
+    font-size: 6rem;
+
+    margin: 0px;
+    font-family: monospace;
+}
+
+.image_count{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 15vw;
+    height: 15vw;
+
+    min-width: 100px;
+    min-height: 100px;
+
+    background-color: white;
 }
