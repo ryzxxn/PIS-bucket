@@ -28,7 +28,7 @@ function print()
 for (let index = 0; index < ImageCache.length; index++) {
     images.push(
         <div key={index}>
-            <img src={ImageCache[index].image_data}></img>
+            <img src={ImageCache[index].image_url}></img>
         </div>
     )
     }
