@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <div className='navbar'>
         <div className='left_nav'>
-            <p className='link_hero'>Image up</p>
+            <a href='/' className='link_hero'>Image up</a>
         </div>
         <div className='right_nav'>
             <p className='link'>Login</p>
