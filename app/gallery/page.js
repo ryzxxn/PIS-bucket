@@ -41,6 +41,7 @@ if (ImageCache) {
   return (
     <>
     <div className='image_container'>
+      <p>{ImageCache.length}</p>
         {images}
     </div>
     </>
