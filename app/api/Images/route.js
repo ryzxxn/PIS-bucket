@@ -2,6 +2,8 @@ import Image from '../model/image'
 import connectmongodb from '../../lib/mongodb'
 import mongoose from 'mongoose'
 
+export const dynamic = 'force-dynamic';
+
 const Message = 'from image list'
 connectmongodb(Message)
 
