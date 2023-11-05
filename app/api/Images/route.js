@@ -3,6 +3,7 @@ import connectmongodb from '../../lib/mongodb'
 import mongoose from 'mongoose'
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 1;
 
 const Message = 'from image list'
 connectmongodb(Message)
