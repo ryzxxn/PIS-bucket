@@ -9,7 +9,6 @@ export default function Navbar() {
             <a href='/' className='link_hero'>Image up</a>
         </div>
         <div className='right_nav'>
-            <p className='link'>Login</p>
             <a href='/gallery' className='link'>Gallery</a>
         </div>
     </div>
