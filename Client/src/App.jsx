@@ -1,12 +1,19 @@
 import './App.css'
-import Image from './Component/image.jsx'
+import Image from './pages/image'
+import Gallery from './pages/gallery';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
 
 
   return (
     <>
-      <Image/>
+      <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<Image />} />
+          <Route path="gallery" element={<Gallery />} />
+      </Routes>
+    </BrowserRouter>
     </>
   )
 }
