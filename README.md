@@ -4,6 +4,10 @@
 
 This repository serves as a personal image storage solution, originally using Discord CDN and later transitioning to Telegram due to policy changes and limitations. The decision to migrate was prompted by changes in Discord's URL regeneration policy and limitations on media file sizes. The new solution utilizes Telegram as a reliable and feature-rich alternative.
 
+## Deployed Application
+
+The application is deployed and can be accessed [Upload-io](https://upload-io.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
+
 ## Why the Change?
 
 ### Previous Setup
@@ -31,6 +35,3 @@ Originally, images were stored on Discord CDN, and their links were stored in a 
 2. **Learning Telegram Webhook API:** To integrate Telegram into the system, understanding and implementing the Telegram Webhook API were essential.
 
 
-## Deployed Application
-
-The application is deployed and can be accessed [here](https://upload-io.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
