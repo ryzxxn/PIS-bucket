@@ -1,14 +1,14 @@
-# Personal Image Storage
+# Personal Image Storage with Telegram Integration
 
 ## Overview
 
-This repository serves as a personal image storage solution, replacing the previous Discord CDN-based approach. The decision to migrate was prompted by changes in Discord's URL regeneration policy and limitations on media file sizes. The new solution utilizes Telegram as a reliable and feature-rich alternative.
+This repository serves as a personal image storage solution, originally using Discord CDN and later transitioning to Telegram due to policy changes and limitations. The decision to migrate was prompted by changes in Discord's URL regeneration policy and limitations on media file sizes. The new solution utilizes Telegram as a reliable and feature-rich alternative.
 
 ## Why the Change?
 
 ### Previous Setup
 
-Previously, images were stored on Discord CDN, and their links were stored in a MongoDB cluster on the cloud. An API facilitated retrieval, providing URLs for displaying images on the client side. However, Discord's policy changes, including URL regeneration, led to obsolescence of old image URLs.
+Originally, images were stored on Discord CDN, and their links were stored in a MongoDB cluster on the cloud. An API facilitated retrieval, providing URLs for displaying images on the client side. However, Discord's policy changes, including URL regeneration, led to obsolescence of old image URLs.
 
 ### Current Setup
 
@@ -30,5 +30,21 @@ Previously, images were stored on Discord CDN, and their links were stored in a 
 
 2. **Learning Telegram Webhook API:** To integrate Telegram into the system, understanding and implementing the Telegram Webhook API were essential.
 
-## Repository Structure
 
+## Deployed Application
+
+The application is deployed and can be accessed [here](https://upload-io.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
+
+## Getting Started
+
+Refer to the `SETUP.md` file for detailed instructions on setting up the project, including environment variables, dependencies, and running the application.
+
+## Additional Notes
+
+Feel free to explore the `TELEGRAM_API.md` file for insights into integrating the Telegram API into the project.
+
+---
+
+This documentation provides an overview of the project, the motivation behind the change, technical details, and guidance on setting up and integrating Telegram into the system. Explore the respective documentation files for more in-depth information.
+
+Note: Ensure that sensitive information such as API keys and tokens are securely stored and not included in the public repository. Consider using environment variables or a configuration file for such sensitive data.
