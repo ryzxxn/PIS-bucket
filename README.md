@@ -34,17 +34,3 @@ Originally, images were stored on Discord CDN, and their links were stored in a 
 ## Deployed Application
 
 The application is deployed and can be accessed [here](https://upload-io.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
-
-## Getting Started
-
-Refer to the `SETUP.md` file for detailed instructions on setting up the project, including environment variables, dependencies, and running the application.
-
-## Additional Notes
-
-Feel free to explore the `TELEGRAM_API.md` file for insights into integrating the Telegram API into the project.
-
----
-
-This documentation provides an overview of the project, the motivation behind the change, technical details, and guidance on setting up and integrating Telegram into the system. Explore the respective documentation files for more in-depth information.
-
-Note: Ensure that sensitive information such as API keys and tokens are securely stored and not included in the public repository. Consider using environment variables or a configuration file for such sensitive data.
