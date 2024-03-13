@@ -6,7 +6,7 @@ This repository serves as a personal image storage solution, originally using Di
 
 ## Deployed Application
 
-The application is deployed and can be accessed [Upload-io](https://pis.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
+The application is deployed and can be accessed [PIS](https://pis.netlify.app/). Please note that due to the free tier hosting of the backend on Render.com, it may take around 40-50 seconds for the API to initialize. Once started, it should work as intended.
 
 ## Why the Change?
 
