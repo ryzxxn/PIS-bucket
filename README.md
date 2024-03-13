@@ -1,4 +1,4 @@
-# Personal Image Storage with Telegram Integration
+# Personal Image Storage
 
 ## Overview
 
