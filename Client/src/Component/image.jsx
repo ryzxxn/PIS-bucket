@@ -69,7 +69,7 @@ export default function Image() {
         uploaded_by: 'elton',
       };
 
-      await axios.post('http://localhost:3000/upload', saveImageDB);
+      await axios.post('https://upload-io.onrender.com/upload', saveImageDB);
     } catch (error) {
       console.error('Error sending image URL to database:', error.message);
     }

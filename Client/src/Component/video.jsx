@@ -67,7 +67,7 @@ export default function VidGifDownload() {
         uploaded_by: 'elton', // Replace with your user information or get dynamically
       };
 
-      await axios.post('http://localhost:3000/upload', saveVideoDB);
+      await axios.post('https://upload-io.onrender.com/upload', saveVideoDB);
       // console.log('Video URL sent successfully:', videoUrl);
       window.location.reload()
     } catch (error) {

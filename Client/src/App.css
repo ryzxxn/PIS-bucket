@@ -1,18 +1,39 @@
 .list_element{
     text-decoration: none;
     margin: 0px;
+    color: white;
 }
 
 .list_container{
     display: flex;
     flex-wrap: wrap;
     gap: .5rem;
+    flex-direction: column;
 }
 
 h2{
     margin: 0px;
     color: white;
     font-size: 3rem;
+}
+
+.download_container{
+    justify-content: space-evenly;
+    display: flex;
+}
+
+.magic_box{
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.element_container{
+    padding: 20px;
+    width: auto;
+    background-color: rgb(43, 43, 43);
+    display: flex;
+    gap: 5rem;
 }
 
 p{

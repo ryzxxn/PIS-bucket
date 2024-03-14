@@ -7,7 +7,7 @@ export default function ImageDownload() {
 
     useEffect(() => {
         // Fetch image URLs from the server
-        axios.get('http://localhost:3000/images')
+        axios.get('https://upload-io.onrender.com/images')
           .then(response => {
             setImageUrls(response.data);
           })
