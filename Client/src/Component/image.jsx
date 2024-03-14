@@ -82,11 +82,11 @@ export default function Image() {
       <div className='input_cont'>
         <h3>Upload images</h3>
         <input className='upload_void' type="file" onChange={handleImageChange} multiple />
-      </div>
-      <div className='upload_cont'>
+        <div className='upload_cont'>
         <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>
           Upload Images
         </button>
+      </div>
       </div>
     </>
   );

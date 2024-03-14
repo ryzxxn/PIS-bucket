@@ -68,9 +68,9 @@ p{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     color: white;
-    gap: 1rem;
-    padding: 4rem;
+    gap: .7rem;
 }
 
 h3{
@@ -91,6 +91,7 @@ h3{
 
 .upload_void{
     height: 4rem;
+    width: 40%;
     cursor: pointer;
     background-color: #007bff;
     color: #fff;
