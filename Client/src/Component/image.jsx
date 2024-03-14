@@ -67,7 +67,7 @@ export default function Image() {
       const saveImageDB = {
         date: new Date().toString(),
         url: imageUrl,
-        type: imageUrl.endsWith('.gif') ? 'image/gif' : 'image/jpeg',
+        type: imageUrl.endsWith('.gif') ? 'image/gif' : 'image/jpeg', // Update type based on file extension
         uploaded_by: 'elton',
       };
 
@@ -81,12 +81,12 @@ export default function Image() {
     <>
       <div className='input_cont'>
         <h3>Upload images</h3>
-        <input className='upload_void' type="file" onChange={handleImageChange} multiple />
+        <input className='upload_void' type="file" accept="image/*" onChange={handleImageChange} multiple />
         <div className='upload_cont'>
-        <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>
-          Upload Images
-        </button>
-      </div>
+          <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>
+            Upload Images
+          </button>
+        </div>
       </div>
     </>
   );
