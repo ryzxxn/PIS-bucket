@@ -12,8 +12,8 @@ export default function upload() {
         <p>Personal Image Storage</p>
       </div>
     <Image/>
-    <br></br>
-    <Video/>
+    {/* <br></br> */}
+    {/* <Video/> */}
     </>
   )
 }
