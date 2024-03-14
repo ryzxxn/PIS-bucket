@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -8,6 +9,8 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors());
+app.use(express.json({ limit: '2gb' }));
+app.use(express.urlencoded({ limit: '2gb', extended: true }));
 const port = 3000; // Use process.env.PORT if available, or default to 3000
 
 // MongoDB connection

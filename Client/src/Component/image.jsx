@@ -30,6 +30,7 @@ export default function Image() {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
+          maxContentLength: 2147483648, // 2GB in bytes
         });
 
         const fileId = response.data.result[isGif ? 'animation' : 'photo'][3].file_id;
@@ -40,7 +41,10 @@ export default function Image() {
       console.error('Error uploading images:', error.message);
       if (error.response && error.response.status === 413) {
         // Payload too large error
-        setErrorImageIndex(selectedImages.indexOf(error.config.data.get('photo')));
+        window.alert('File is too large. Please select a smaller file.');
+      } else if (error.response && error.response.status === 400) {
+        // Bad request error
+        window.alert('Upload failed. Please try again later.');
       }
     } finally {
       setLoading(false);
@@ -60,11 +64,9 @@ export default function Image() {
 
   const sendImageURL = async (imageUrl) => {
     try {
-      // Assuming you have an endpoint to save the image URL to the database
       const saveImageDB = {
         date: new Date().toString(),
         url: imageUrl,
-        // You can determine the type based on the file extension or content type
         type: imageUrl.endsWith('.gif') ? 'image/gif' : 'image/jpeg',
         uploaded_by: 'elton',
       };
@@ -79,16 +81,13 @@ export default function Image() {
     <>
       <div className='input_cont'>
         <h3>Upload images</h3>
-        <input className='upload_void' type="file" accept="image/*,.gif" onChange={handleImageChange} multiple />
+        <input className='upload_void' type="file" onChange={handleImageChange} multiple />
       </div>
       <div className='upload_cont'>
         <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>
           Upload Images
         </button>
-        {errorImageIndex !== null && (
-          <p>Error uploading image {errorImageIndex + 1}: File too large</p>
-        )}
       </div>
     </>
-  )
+  );
 }

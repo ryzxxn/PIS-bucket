@@ -31,6 +31,7 @@ export default function VidGifDownload() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        maxContentLength: 2147483648, // 2GB in bytes
       });
 
       const fileId = response.data.result.video.file_id;
@@ -38,6 +39,11 @@ export default function VidGifDownload() {
       await getFileLink(fileId);
     } catch (error) {
       console.error('Error uploading file:', error.message);
+      if (error.response && error.response.status === 413) {
+        window.alert('File is too large. Please select a smaller file.');
+      } else if (error.response && error.response.status === 400) {
+        window.alert('Upload failed. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }
