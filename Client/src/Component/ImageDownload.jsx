@@ -1,16 +1,13 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link } from "react-router-dom";
 
-
-export default function gallery() {
-
+export default function ImageDownload() {
     const [imageUrls, setImageUrls] = useState(null)
 
 
     useEffect(() => {
         // Fetch image URLs from the server
-        axios.get('https://upload-io.onrender.com/images')
+        axios.get('http://localhost:3000/images')
           .then(response => {
             setImageUrls(response.data);
           })
@@ -21,15 +18,13 @@ export default function gallery() {
   return (
     <>
     <div>
-      <div className='navbar'>
-      <Link className='link' to="/">Home</Link>
-      </div>
+        <h3>Images</h3>
     {imageUrls &&(
     <>
     <h2>{imageUrls.length}</h2>
     <div className='list_container'>
     {imageUrls.map((url, index) => (
-        <img className='list_element' key={index} src={url.image_url} alt={`Image ${index}`} style={{ maxWidth: '300px', marginTop: '0px' }} >
+        <img className='list_element' key={index} src={url.url} alt={`Image ${index}`} style={{ maxWidth: '300px', marginTop: '0px' }} >
         </img>
     ))}
     </div>

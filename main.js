@@ -8,13 +8,10 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors());
-const port = process.env.PORT || 3000; // Use process.env.PORT if available, or default to 3000
-
-// Access the DATABASE_URL variable
-const databaseUrl = process.env.DATABASE_URL;
+const port = 3000; // Use process.env.PORT if available, or default to 3000
 
 // MongoDB connection
-mongoose.connect(databaseUrl)
+mongoose.connect(process.env.DATABASE_URL)
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -24,9 +21,10 @@ mongoose.connect(databaseUrl)
 
 // Define the image schema
 const imageSchema = new mongoose.Schema({
-  image_date: Date,
-  image_url: String,
-  image_uploaded_by: String,
+  date: Date,
+  url: String,
+  type: String,
+  uploaded_by: String,
 });
 
 // Create the Image model if not exists
@@ -38,7 +36,8 @@ app.use(express.json());
 // Route to get all images
 app.get('/images', async (req, res) => {
   try {
-    const imageData = await Image.find({});
+    // Filter images where type is 'image/jpeg'
+    const imageData = await Image.find({ type: 'image/jpeg' });
     res.json(imageData);
   } catch (error) {
     console.error('Error retrieving images:', error.message);
@@ -46,17 +45,31 @@ app.get('/images', async (req, res) => {
   }
 });
 
+
+app.get('/videos', async (req, res) => {
+  try {
+    // Filter videos where type is 'video'
+    const videoData = await Image.find({ type: 'video' });
+    res.json(videoData);
+  } catch (error) {
+    console.error('Error retrieving videos:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Route to upload an image
-app.post('/uploadImage', async (req, res) => {
+app.post('/upload', async (req, res) => {
   try {
     // Assuming you're sending image_date, image_url, and image_uploaded_by in the request body
-    const { image_date, image_url, image_uploaded_by } = req.body;
+    const { date, url, type, uploaded_by } = req.body;
     
-    console.log(image_date, image_uploaded_by, image_url);
+    console.log(date, uploaded_by, url);
     const newImage = new Image({
-      image_date : image_date,
-      image_url : image_url,
-      image_uploaded_by: image_uploaded_by,
+      date : date,
+      url : url,
+      type: type,
+      uploaded_by: uploaded_by,
     });
 
     const savedImage = await newImage.save();

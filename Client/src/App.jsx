@@ -1,6 +1,6 @@
 import './App.css'
-import Image from './pages/image'
-import Gallery from './pages/gallery';
+import Upload from './pages/upload'
+import Download from './pages/download';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Image />} />
-          <Route path="gallery" element={<Gallery />} />
+          <Route path="/" element={<Upload />} />
+          <Route path="download" element={<Download />} />
       </Routes>
     </BrowserRouter>
     </>

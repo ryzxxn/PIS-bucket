@@ -45,8 +45,16 @@ p{
 
 .input_cont{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     color: white;
+    gap: 1rem;
+    padding: 4rem;
+}
+
+h3{
+    color: white;
+    margin: 0px;
 }
 
 .navabr{
@@ -59,3 +67,19 @@ p{
     color: white;
     margin: .8rem;
 }
+
+.upload_void{
+    height: 4rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.upload_void::-webkit-file-upload-button {
+    display: none;
+    text-align: center;
+}
+  
