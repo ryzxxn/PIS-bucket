@@ -36,6 +36,10 @@ const Image = mongoose.models.Image || mongoose.model('Image', imageSchema);
 // Middleware to parse JSON in the request body
 app.use(express.json());
 
+app.get('/pis-wake', (req, res) => {
+  res.send('true'); // Respond with 'true'
+});
+
 // Route to get all images
 app.get('/images', async (req, res) => {
   try {
