@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function ImageDownload() {
-    const [Documents, setDocuments] = useState(null);
+export default function DocumentDownload() {
+    const [documents, setDocuments] = useState(null);
 
     useEffect(() => {
-        // Fetch image URLs from the server
-        axios.get('https://upload-io.onrender.com/images')
+        // Fetch document URLs from the server
+        axios.get('https://upload-io.onrender.com/documents')
             .then(response => {
                 setDocuments(response.data);
             })
             .catch(error => {
-                console.error('Error fetching image URLs:', error.message);
+                console.error('Error fetching document URLs:', error.message);
             });
     }, []);
 
-    const copyImageLink = (imageUrl) => {
+    const copyDocumentLink = (documentUrl) => {
         // Create a temporary textarea element
         const textarea = document.createElement('textarea');
-        textarea.value = imageUrl;
+        textarea.value = documentUrl;
         document.body.appendChild(textarea);
         textarea.select();
 
@@ -31,20 +31,17 @@ export default function ImageDownload() {
 
     return (
         <div>
-            <h3>Images</h3>
-            {Documents && (
+            <h3>Documents</h3>
+            {documents && (
                 <>
-                    <h2>{Documents.length}</h2>
+                    <h2>{documents.length}</h2>
                     <div className='list_container'>
-                        {Documents.map((url, index) => (
-                            <div key={index} className='image_container'>
-                                <img
-                                    className='list_element'
-                                    src={url.url}
-                                    alt={`Image ${index}`}
-                                    style={{ maxWidth: '300px', marginTop: '10px' }}
-                                />
-                                <button onClick={() => copyImageLink(url.url)}>Copy Link</button>
+                        {documents.map((doc, index) => (
+                            <div key={index} className='document_container'>
+                                <a href={doc.url} target="_blank" rel="noopener noreferrer">
+                                    Document {index + 1}
+                                </a>
+                                <button onClick={() => copyDocumentLink(doc.url)}>Copy Link</button>
                             </div>
                         ))}
                     </div>

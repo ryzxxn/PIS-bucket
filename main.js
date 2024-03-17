@@ -64,7 +64,7 @@ app.get('/videos', async (req, res) => {
   }
 });
 
-app.get('/document', async (req, res) => {
+app.get('/documents', async (req, res) => {
   try {
     // Filter videos where type is 'video'
     const Documentdata = await Image.find({ type: 'document' });
