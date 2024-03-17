@@ -64,6 +64,17 @@ app.get('/videos', async (req, res) => {
   }
 });
 
+app.get('/document', async (req, res) => {
+  try {
+    // Filter videos where type is 'video'
+    const Documentdata = await Image.find({ type: 'document' });
+    res.json(Documentdata);
+  } catch (error) {
+    console.error('Error retrieving videos:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 // Route to upload an image
 app.post('/upload', async (req, res) => {

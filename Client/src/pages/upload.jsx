@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from '../Component/image'
 import Navbar from '../Component/navbar'
-import Video from '../Component/video'
+// import Video from '../Component/video'
+import Document from '../Component/documents';
 
 export default function upload() {
   return (
@@ -14,6 +15,7 @@ export default function upload() {
     <Image/>
     {/* <br></br> */}
     {/* <Video/> */}
+    <Document/>
     </>
   )
 }
