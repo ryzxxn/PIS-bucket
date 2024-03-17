@@ -1,5 +1,6 @@
 import DownloadImage from '../Component/ImageDownload';
 import DownloadVideo from '../Component/videoDownload';
+import DownloadDocument from '../Component/documentDownload';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 
@@ -23,18 +24,15 @@ export default function Download() {
         <Link className='link' to="/">Upload</Link>
       </div>
 
-      <div className='magic_box'>
+      {/* <div className='magic_box'>
         <div style={{color:'white'}} onClick={toggleImage}>image</div>
         <div style={{color:'white'}} onClick={toggleVideo}>video</div>
-      </div>
+      </div> */}
 
       <div className='download_container'>
-        {showImage && (
-          <DownloadImage />
-        )}
-        {showVideo && (
-          <DownloadVideo />
-        )}
+        <DownloadImage />
+        <DownloadVideo />
+        <DownloadDocument/>
       </div>
     </>
   );

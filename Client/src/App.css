@@ -1,6 +1,7 @@
 .list_element{
     text-decoration: none;
     margin: 0px;
+    width: 6rem;
     color: white;
 }
 
