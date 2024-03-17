@@ -77,7 +77,7 @@ export default function Document() {
   return (
     <>
       <div className='input_cont'>
-        <h3>Upload documents (MAX SIZE 10mb)</h3>
+        <h3>Upload documents (MAX SIZE 50mb)</h3>
         <input className='upload_void' type="file" accept=".docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={handleFileChange} multiple />
         <div className='upload_cont'>
           <button className='upload_button' onClick={handleFilesUpload} disabled={loading}>

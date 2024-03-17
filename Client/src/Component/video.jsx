@@ -84,7 +84,7 @@ export default function VidGifDownload() {
   return (
     <>
       <div className='input_cont'>
-        <h3>Upload video</h3>
+        <h3>Upload video (MAX SIZE 50mb)</h3>
         <input className='upload_void' type="file" accept="video/*, image/gif" onChange={handleFileChange} />
         {selectedFile && (
           <div className='upload_cont'>

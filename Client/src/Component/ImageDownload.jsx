@@ -37,7 +37,7 @@ export default function ImageDownload() {
                     <h2>{imageUrls.length}</h2>
                     <div className='list_container'>
                         {imageUrls.map((url, index) => (
-                            <div key={index} className='image_container'>
+                            <div key={index} className='element_container'>
                                 <img
                                     className='list_element'
                                     src={url.url}
