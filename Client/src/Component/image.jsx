@@ -5,8 +5,8 @@ export default function Image() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const BOT_TOKEN = 'YOUR_BOT_TOKEN';
-  const CHAT_ID = 'YOUR_CHAT_ID';
+  const BOT_TOKEN = '7167183620:AAHzEmlzEHw3fTlOgJBEr8CWs1DY54D3fuw';
+  const CHAT_ID = '6744916119';
 
   const handleImageChange = (e) => {
     const files = e.target.files;
