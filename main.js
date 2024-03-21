@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
 // Route to get all images
 app.get('/images', async (req, res, next) => {
   try {
-    const imageData = await Image.find({ type: 'image/jpeg' });
+    const imageData = await Image.find({ $or: [{ type: 'image/jpeg' }, { type: 'image/gif' }] });
     res.json(imageData);
   } catch (error) {
     next(error);

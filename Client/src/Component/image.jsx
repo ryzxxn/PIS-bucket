@@ -5,8 +5,7 @@ export default function Image() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const BOT_TOKEN = '7167183620:AAHzEmlzEHw3fTlOgJBEr8CWs1DY54D3fuw';
-  const CHAT_ID = '6744916119';
+  const CLIENT_API_KEY = 'eeae8ed20280fd7fe151cf0e86dff11e'; // Replace with your imgBB API key
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -20,55 +19,27 @@ export default function Image() {
       for (let i = 0; i < selectedImages.length; i++) {
         const image = selectedImages[i];
         const formData = new FormData();
-        formData.append('photo', image);
-        formData.append('chat_id', CHAT_ID);
+        formData.append('image', image);
 
-        const isGif = image.type === 'image/gif';
-
-        const response = await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/send${isGif ? 'Animation' : 'Photo'}`, formData, {
+        const response = await axios.post(`https://api.imgbb.com/1/upload?key=${CLIENT_API_KEY}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-          maxContentLength: 2147483648, // 2GB in bytes
         });
 
-        const fileId = response.data.result[isGif ? 'animation' : 'photo'][3].file_id;
-        const fileLink = await getFileLink(fileId);
-        await sendImageURL(fileLink);
+        const imageUrl = response.data.data.url;
+        await sendImageURLToDatabase(imageUrl);
+        alert('Image uploaded successfully! URL: ' + imageUrl);
       }
-      alert('Images uploaded successfully!');
     } catch (error) {
       console.error('Error uploading images:', error.message);
-      if (error.response) {
-        const statusCode = error.response.status;
-        if (statusCode === 413) {
-          // Payload too large error
-          alert('File is too large. Please select a smaller file.');
-        } else if (statusCode === 400) {
-          // Bad request error
-          alert('Upload failed. Please try again later.');
-        }
-      } else {
-        // Network or unexpected errors
-        alert('An error occurred. Please try again later.');
-      }
+      alert('An error occurred. Please try again later.');
     } finally {
       setLoading(false);
     }
   };
 
-  const getFileLink = async (fileId) => {
-    try {
-      const response = await axios.get(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
-      const filePath = response.data.result.file_path;
-      return `https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`;
-    } catch (error) {
-      console.error('Error retrieving direct download link:', error.message);
-      throw error;
-    }
-  };
-
-  const sendImageURL = async (imageUrl) => {
+  const sendImageURLToDatabase = async (imageUrl) => {
     try {
       const saveImageDB = {
         date: new Date().toString(),
@@ -77,9 +48,11 @@ export default function Image() {
         uploaded_by: 'elton',
       };
 
-      await axios.post('https://upload-io.onrender.com/upload', saveImageDB);
+      const response = await axios.post('https://upload-io.onrender.com/upload', saveImageDB);
+      console.log('Image URL saved to database:', response.data); // Log response for debugging
     } catch (error) {
       console.error('Error sending image URL to database:', error.message);
+      throw error; // Rethrow the error for further debugging
     }
   };
 
