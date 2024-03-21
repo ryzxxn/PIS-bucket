@@ -2,19 +2,17 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import winston from 'winston';
 
 // Load environment variables from .env file
 dotenv.config();
-import cors from 'cors';
 
 const app = express();
-app.use(cors());
-app.use(express.json({ limit: '2gb' }));
-app.use(express.urlencoded({ limit: '2gb', extended: true }));
-const port = 3000; // Use process.env.PORT if available, or default to 3000
+const port = process.env.PORT || 3000;
 
 // MongoDB connection
-mongoose.connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -33,68 +31,61 @@ const imageSchema = new mongoose.Schema({
 // Create the Image model if not exists
 const Image = mongoose.models.Image || mongoose.model('Image', imageSchema);
 
-// Middleware to parse JSON in the request body
-app.use(express.json());
+// Middleware
+app.use(cors());
+app.use(express.json({ limit: '2gb' }));
+app.use(express.urlencoded({ limit: '2gb', extended: true }));
 
-app.get('/pis-wake', (req, res) => {
-  res.send('true'); // Respond with 'true'
+// Error handling middleware
+app.use((err, req, res, next) => {
+  winston.error(err.message, err);
+  res.status(500).json({ error: 'Internal Server Error' });
 });
 
 // Route to get all images
-app.get('/images', async (req, res) => {
+app.get('/images', async (req, res, next) => {
   try {
-    // Filter images where type is 'image/jpeg'
     const imageData = await Image.find({ type: 'image/jpeg' });
     res.json(imageData);
   } catch (error) {
-    console.error('Error retrieving images:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 });
 
-
-app.get('/videos', async (req, res) => {
+// Route to get all videos
+app.get('/videos', async (req, res, next) => {
   try {
-    // Filter videos where type is 'video'
     const videoData = await Image.find({ type: 'video' });
     res.json(videoData);
   } catch (error) {
-    console.error('Error retrieving videos:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 });
 
-app.get('/documents', async (req, res) => {
+// Route to get all documents
+app.get('/documents', async (req, res, next) => {
   try {
-    // Filter videos where type is 'video'
-    const Documentdata = await Image.find({ type: 'document' });
-    res.json(Documentdata);
+    const documentData = await Image.find({ type: 'document' });
+    res.json(documentData);
   } catch (error) {
-    console.error('Error retrieving videos:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 });
-
 
 // Route to upload an image
-app.post('/upload', async (req, res) => {
+app.post('/upload', async (req, res, next) => {
   try {
-    // Assuming you're sending image_date, image_url, and image_uploaded_by in the request body
     const { date, url, type, uploaded_by } = req.body;
-    
-    console.log(date, uploaded_by, url);
-    const newImage = new Image({
-      date : date,
-      url : url,
-      type: type,
-      uploaded_by: uploaded_by,
-    });
+    // Validate request body
+    if (!date || !url || !type || !uploaded_by) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
 
+    const newImage = new Image({ date, url, type, uploaded_by });
     const savedImage = await newImage.save();
     res.json(savedImage);
   } catch (error) {
-    console.error('Error uploading image:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    next(error);
   }
 });
 

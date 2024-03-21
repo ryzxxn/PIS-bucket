@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 export default function Image() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [errorImageIndex, setErrorImageIndex] = useState(null);
 
-  const BOT_TOKEN = '7167183620:AAHzEmlzEHw3fTlOgJBEr8CWs1DY54D3fuw';
-  const CHAT_ID = '6744916119';
+  const BOT_TOKEN = 'YOUR_BOT_TOKEN';
+  const CHAT_ID = 'YOUR_CHAT_ID';
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -37,14 +36,21 @@ export default function Image() {
         const fileLink = await getFileLink(fileId);
         await sendImageURL(fileLink);
       }
+      alert('Images uploaded successfully!');
     } catch (error) {
       console.error('Error uploading images:', error.message);
-      if (error.response && error.response.status === 413) {
-        // Payload too large error
-        window.alert('File is too large. Please select a smaller file.');
-      } else if (error.response && error.response.status === 400) {
-        // Bad request error
-        window.alert('Upload failed. Please try again later.');
+      if (error.response) {
+        const statusCode = error.response.status;
+        if (statusCode === 413) {
+          // Payload too large error
+          alert('File is too large. Please select a smaller file.');
+        } else if (statusCode === 400) {
+          // Bad request error
+          alert('Upload failed. Please try again later.');
+        }
+      } else {
+        // Network or unexpected errors
+        alert('An error occurred. Please try again later.');
       }
     } finally {
       setLoading(false);
@@ -80,11 +86,11 @@ export default function Image() {
   return (
     <>
       <div className='input_cont'>
-        <h3>Upload images(MAX SIZE 10mb)</h3>
+        <h3>Upload images (MAX SIZE 10mb)</h3>
         <input className='upload_void' type="file" accept="image/*" onChange={handleImageChange} multiple />
         <div className='upload_cont'>
           <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>
-            Upload Images
+            {loading ? 'Uploading...' : 'Upload Images'}
           </button>
         </div>
       </div>
