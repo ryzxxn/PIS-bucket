@@ -59,7 +59,7 @@ export default function Image() {
   return (
     <>
       <div className='input_cont'>
-        <h3>Upload images (MAX SIZE 10mb)</h3>
+        <h3>Upload images</h3>
         <input className='upload_void' type="file" accept="image/*" onChange={handleImageChange} multiple />
         <div className='upload_cont'>
           <button className='upload_button' onClick={handleImagesUpload} disabled={loading}>

@@ -5,18 +5,18 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 
 export default function Download() {
-  const [showImage, setShowImage] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
+  // const [showImage, setShowImage] = useState(false);
+  // const [showVideo, setShowVideo] = useState(false);
 
-  function toggleImage() {
-    setShowImage(!showImage);
-    setShowVideo(false); // Hide video component when showing image component
-  }
+  // function toggleImage() {
+  //   setShowImage(!showImage);
+  //   setShowVideo(false); // Hide video component when showing image component
+  // }
 
-  function toggleVideo() {
-    setShowVideo(!showVideo);
-    setShowImage(false); // Hide image component when showing video component
-  }
+  // function toggleVideo() {
+  //   setShowVideo(!showVideo);
+  //   setShowImage(false); // Hide image component when showing video component
+  // }
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Download() {
 
       <div className='download_container'>
         <DownloadImage />
-        <DownloadVideo />
+        {/* <DownloadVideo /> */}
         <DownloadDocument/>
       </div>
     </>
