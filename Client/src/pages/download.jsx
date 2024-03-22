@@ -32,7 +32,7 @@ export default function Download() {
       <div className='download_container'>
         <DownloadImage />
         {/* <DownloadVideo /> */}
-        <DownloadDocument/>
+        {/* <DownloadDocument/> */}
       </div>
     </>
   );
