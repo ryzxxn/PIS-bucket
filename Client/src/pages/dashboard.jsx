@@ -17,15 +17,25 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`);
-        setImages(response.data);
+        const cachedImages = sessionStorage.getItem(`cachedImages_${currentTag}`);
+        let responseData;
+        if (cachedImages) {
+          responseData = JSON.parse(cachedImages);
+          setImages(responseData);
+        } else {
+          const response = await axios.get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`);
+          responseData = response.data;
+          setImages(responseData);
+          sessionStorage.setItem(`cachedImages_${currentTag}`, JSON.stringify(responseData));
+        }
       } catch (error) {
         console.error('Error fetching image URLs:', error.message);
       }
     }
-
+  
     fetchData();
   }, [currentTag, refresh]);
+  
 
   function activeTag(e) {
     setCurrentTag(e.target.value);
