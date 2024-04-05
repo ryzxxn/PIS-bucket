@@ -8,7 +8,7 @@ export default function Upload() {
   const [loading, setLoading] = useState(false);
 
   const IMG_CLIENT_API_KEY = import.meta.env.VITE_IMGBB; // Replace with your imgBB API key
-  const Upload_endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT; // Replace with your imgBB API key
+  const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT; // Replace with your imgBB API key
   // console.log(IMG_CLIENT_API_KEY);
 
   const handleImageChange = (e) => {
@@ -53,7 +53,7 @@ export default function Upload() {
         uploaded_by: sessionStorage.getItem('Display_name')
       };
 
-      const response = await axios.post(Upload_endpoint+'/upload', saveImageDB);
+      const response = await axios.post(endpoint+'/upload', saveImageDB);
       console.log('Image URL saved to database:', response.data); // Log response for debugging
     } catch (error) {
       console.error('Error sending image URL to database:', error.message);

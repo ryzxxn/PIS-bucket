@@ -8,11 +8,11 @@ export default function Dashboard() {
   const [currentTag, setCurrentTag] = useState('image');
   const [images, setImages] = useState([]);
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const Image_endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
+  const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
 
   useEffect(() => {
     axios
-      .get(`${Image_endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
+      .get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
       .then(response => {
         setImages(response.data);
       })
