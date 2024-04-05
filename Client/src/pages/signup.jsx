@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaGoogle } from "react-icons/fa";
 import { auth, provider } from '../../firebase/firebase_config';
 import { onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
-import { set } from 'mongoose';
+import { FaBucket } from "react-icons/fa6";
 
 export default function Signup() {
     const [userData, setUserData] = useState(null);
@@ -38,14 +38,11 @@ export default function Signup() {
         <>
             <div className='signup_page'>
                 <div className='signup_container'>
+                    <div className='bucket_container'>
+                        <FaBucket className='bucket_logo' />
+                        <p>PIS Bucket</p>
+                    </div>
                     <p onClick={handleSignIn} className='google_button'>Sign up with Google <FaGoogle /></p>
-                    {userData ? (
-                        <div>
-                            <p>Signed in</p>
-                        </div>
-                    ) : (
-                        <p>User is signed out</p>
-                    )}
                 </div>
             </div>
         </>

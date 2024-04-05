@@ -14,9 +14,9 @@ export default function Dashnavbar() {
         </div>
         <div className='dashnav_right'>
             <div>
-                <div class="dropdown">
+                <div className="dropdown">
                     <img src={user_img} className='user_img'></img>
-                    <div class="dropdown-content">
+                    <div className="dropdown-content">
                         <p>Logout</p>
                     </div>
                 </div>
