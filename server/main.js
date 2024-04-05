@@ -54,6 +54,30 @@ app.get('/images', async (req, res, next) => {
     }
 });
 
+app.get('/delete', async (req, res, next) => {
+  try {
+    const { apikey, user, url } = req.query;
+
+    // Validate API key and parameters
+    if (apikey !== API_KEY || !user || !url) {
+      return res.status(400).json({ error: 'Invalid request' });
+    }
+
+    // Delete the image entry
+    const imageData = await Image.findOneAndDelete({ email: user, url: url });
+    
+    if (!imageData) {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    return res.json({ message: 'Image deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 // Route to upload an image
 app.post('/upload', async (req, res, next) => {
   try {

@@ -207,3 +207,8 @@ p{
   border-radius: 1rem;
   height: 3rem;
 }
+
+.actions{
+  display: flex;
+  gap: .6rem;
+}

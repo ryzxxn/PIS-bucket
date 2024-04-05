@@ -1,9 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { auth } from '../../firebase/firebase_config';
 
 export default function Dashnavbar() {
 
     const user_img = sessionStorage.getItem('photo')
+
+    function handleSignOut() {
+        auth.signOut()
+      .then(() => {
+        console.log('User signed out successfully');
+        window.location.href = '/';
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      });
+    }
 
   return (
     <>
@@ -17,7 +29,7 @@ export default function Dashnavbar() {
                 <div className="dropdown">
                     <img src={user_img} className='user_img'></img>
                     <div className="dropdown-content">
-                        <p>Logout</p>
+                        <p onClick={handleSignOut}>Logout</p>
                     </div>
                 </div>
             </div>

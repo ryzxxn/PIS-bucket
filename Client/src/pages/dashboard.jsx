@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Dashnavbar from '../components/dashNavbar';
 import axios from 'axios';
 import { CiLink } from 'react-icons/ci';
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function Dashboard() {
   const user = sessionStorage.getItem('Display_name');
   const [currentTag, setCurrentTag] = useState('image');
   const [images, setImages] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
 
@@ -19,7 +21,7 @@ export default function Dashboard() {
       .catch(error => {
         console.error('Error fetching image URLs:', error.message);
       });
-  }, [currentTag]); // Depend only on currentTag, not on URL
+  }, [currentTag, refresh]);
 
   function activeTag(e) {
     setCurrentTag(e.target.value);
@@ -38,6 +40,18 @@ export default function Dashboard() {
   }
 
   const tags = ['image', 'gif'];
+
+  function deletePost(img_url) {
+    axios
+      .get(`${endpoint}/delete?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&url=${img_url}`)
+      .then(response => {
+        console.log("image deleted");
+        setRefresh(!refresh);
+      })
+      .catch(error => {
+        console.error('Error', error.message);
+      });
+  }
 
   return (
     <>
@@ -63,9 +77,14 @@ export default function Dashboard() {
               {image.type === currentTag || currentTag === 'All' ? (
                 <>
                   <img className="img_element" src={image.url} alt={image._id} />
-                  <p style={{ cursor: 'pointer' }} onClick={() => copyLinkToClipboard(image.url)}>
-                    <CiLink style={{ color: 'white', fontSize: '1.4rem' }} />
-                  </p>
+                  <div className='actions'>
+                    <p style={{ cursor: 'pointer' }} onClick={() => copyLinkToClipboard(image.url)}>
+                      <CiLink style={{ color: 'white', fontSize: '1.4rem' }} />
+                    </p>
+                    <p style={{ cursor: 'pointer' }} onClick={() => deletePost(image.url)}>
+                      <RiDeleteBin6Fill style={{ color: 'white', fontSize: '1.4rem' }} />
+                    </p>
+                  </div>
                 </>
               ) : null}
             </div>
