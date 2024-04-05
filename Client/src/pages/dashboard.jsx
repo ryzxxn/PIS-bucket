@@ -3,6 +3,7 @@ import Dashnavbar from '../components/dashNavbar';
 import axios from 'axios';
 import { CiLink } from 'react-icons/ci';
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FaRegImages } from "react-icons/fa";
 
 export default function Dashboard() {
   const user = sessionStorage.getItem('Display_name');
@@ -59,7 +60,9 @@ export default function Dashboard() {
       <div className="dashboard_parent">
         <div className="dashboard_container">
           <p>Welcome {user}</p>
+          <p><FaRegImages />{images.length}</p>
         </div>
+        
 
         <div className="tag">
           <div className="tag_container">
