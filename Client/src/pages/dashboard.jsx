@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get(`${Image_endpoint}images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
+      .get(`${Image_endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
       .then(response => {
         setImages(response.data);
       })

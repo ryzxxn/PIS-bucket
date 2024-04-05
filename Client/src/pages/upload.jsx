@@ -53,7 +53,7 @@ export default function Upload() {
         uploaded_by: sessionStorage.getItem('Display_name')
       };
 
-      const response = await axios.post(Upload_endpoint+'upload', saveImageDB);
+      const response = await axios.post(Upload_endpoint+'/upload', saveImageDB);
       console.log('Image URL saved to database:', response.data); // Log response for debugging
     } catch (error) {
       console.error('Error sending image URL to database:', error.message);
