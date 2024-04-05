@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [refresh, setRefresh] = useState(false);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
+  const tags = ['image', 'gif'];
 
   useEffect(() => {
     async function fetchData() {
@@ -42,7 +43,6 @@ export default function Dashboard() {
       });
   }
 
-  const tags = ['image', 'gif'];
 
   async function deletePost(img_url) {
     try {
@@ -93,6 +93,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+        
       </div>
     </>
   );

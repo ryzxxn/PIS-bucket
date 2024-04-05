@@ -33,8 +33,8 @@ const Image = mongoose.model('Image', imageSchema);
 
 // Middleware
 app.use(cors());
-app.use(express.json({ limit: '2gb' }));
-app.use(express.urlencoded({ limit: '2gb', extended: true }));
+app.use(express.json());
+app.use(express.urlencoded());
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -44,15 +44,21 @@ app.use((err, req, res, next) => {
 
 // Route to get all images
 app.get('/images', async (req, res, next) => {
-  const {apikey, user, type} = req.query
-    if (apikey === API_KEY ) {
-      const imageData = await Image.find({email: user, type: type });
+  const { apikey, user, type } = req.query;
+  if (apikey === API_KEY) {
+    try {
+      // Fetch images from the database, sorted by date in reverse order
+      const imageData = await Image.find({ email: user, type: type }).sort({ date: -1 });
       res.json(imageData);
+    } catch (error) {
+      console.error('Error fetching images:', error.message);
+      res.status(500).json({ error: 'Internal server error' });
     }
-    else{
-      res.json("error")
-    }
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
 });
+
 
 app.get('/delete', async (req, res, next) => {
   try {
