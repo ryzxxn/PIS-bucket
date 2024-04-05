@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Dashnavbar from '../components/dashNavbar';
 import axios from 'axios';
+import { CiLink } from 'react-icons/ci';
 
 export default function Dashboard() {
   const user = sessionStorage.getItem('Display_name');
   const [currentTag, setCurrentTag] = useState('image');
   const [images, setImages] = useState([]);
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const Image_endpoint = import.meta.env.VITE_IMAGE_ENDPOINT;
+  const Image_endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
 
   useEffect(() => {
     axios
-      .get(Image_endpoint+`images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
+      .get(`${Image_endpoint}images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
       .then(response => {
         setImages(response.data);
       })
@@ -22,6 +23,18 @@ export default function Dashboard() {
 
   function activeTag(e) {
     setCurrentTag(e.target.value);
+  }
+
+  function copyLinkToClipboard(url) {
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        console.log('Link copied to clipboard:', url);
+        alert('Link copied to clipboard!');
+      })
+      .catch(error => {
+        console.error('Error copying link to clipboard:', error);
+        alert('Failed to copy link to clipboard.');
+      });
   }
 
   const tags = ['image', 'gif'];
@@ -48,7 +61,12 @@ export default function Dashboard() {
           {images.map((image, index) => (
             <div key={index}>
               {image.type === currentTag || currentTag === 'All' ? (
-                <img className="img_element" src={image.url} alt={image._id} />
+                <>
+                  <img className="img_element" src={image.url} alt={image._id} />
+                  <p style={{ cursor: 'pointer' }} onClick={() => copyLinkToClipboard(image.url)}>
+                    <CiLink style={{ color: 'white', fontSize: '1.4rem' }} />
+                  </p>
+                </>
               ) : null}
             </div>
           ))}

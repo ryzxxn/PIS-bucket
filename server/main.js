@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const API_KEY = "b639eada-925a-4ea1-9ba3-a95529ea4fea"
+const API_KEY = process.env.API_KEY
 
 // MongoDB connection
 mongoose.connect(process.env.DATABASE_URL)
