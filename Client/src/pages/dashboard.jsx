@@ -1,11 +1,11 @@
 import React from 'react'
 import Dashnavbar from '../components/dashNavbar'
 
-export default function Upload() {
+export default function Dashboard() {
   return (
     <>
     <Dashnavbar/>
-    <div>Upload</div>
+    <div>Dashboard</div>
     </>
   )
 }
