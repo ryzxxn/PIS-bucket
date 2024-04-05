@@ -191,3 +191,19 @@ p{
   padding: 0rem 1rem;
   justify-content: space-evenly;
 }
+
+.input_cont{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.upload_void{
+  padding: 2rem;
+  border: dotted .3rem white;
+  border-radius: 1rem;
+  height: 3rem;
+}
