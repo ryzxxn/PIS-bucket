@@ -14,14 +14,16 @@ export default function Dashboard() {
   const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
 
   useEffect(() => {
-    axios
-      .get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`)
-      .then(response => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`);
         setImages(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching image URLs:', error.message);
-      });
+      }
+    }
+
+    fetchData();
   }, [currentTag, refresh]);
 
   function activeTag(e) {
@@ -42,16 +44,14 @@ export default function Dashboard() {
 
   const tags = ['image', 'gif'];
 
-  function deletePost(img_url) {
-    axios
-      .get(`${endpoint}/delete?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&url=${img_url}`)
-      .then(response => {
-        console.log("image deleted");
-        setRefresh(!refresh);
-      })
-      .catch(error => {
-        console.error('Error', error.message);
-      });
+  async function deletePost(img_url) {
+    try {
+      const response = await axios.get(`${endpoint}/delete?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&url=${img_url}`);
+      console.log("image deleted");
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error', error.message);
+    }
   }
 
   return (
