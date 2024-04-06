@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Dashnavbar from '../components/dashNavbar';
 import axios from 'axios';
 import { CiLink } from 'react-icons/ci';
@@ -13,35 +13,66 @@ export default function Dashboard() {
   const [images, setImages] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [observer, setObserver] = useState(null);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
   const tags = ['image', 'gif'];
-  const imagesPerPage = 20;
+  const imagesPerPage = 21;
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const cachedImages = sessionStorage.getItem(`cachedImages_${currentTag}`);
-        let responseData;
-        if (cachedImages) {
-          responseData = JSON.parse(cachedImages);
-          setImages(responseData);
-        } else {
-          const response = await axios.get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`);
-          responseData = response.data;
-          setImages(responseData);
-          sessionStorage.setItem(`cachedImages_${currentTag}`, JSON.stringify(responseData));
-        }
+        const response = await axios.get(`${endpoint}/images?apikey=${API_KEY}&user=${sessionStorage.getItem('email')}&type=${currentTag}`);
+        const responseData = response.data;
+        setImages(responseData);
       } catch (error) {
         console.error('Error fetching image URLs:', error.message);
       }
-    }
+    };
 
     fetchData();
   }, [currentTag, refresh]);
 
+  useEffect(() => {
+    const handleIntersection = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Load image when it enters the viewport
+          const img = entry.target;
+          img.src = img.dataset.src;
+          observer.unobserve(img);
+        }
+      });
+    };
+
+    if (observer) {
+      const newObserver = new IntersectionObserver(handleIntersection, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      });
+      setObserver(newObserver);
+    }
+
+    return () => {
+      if (observer) observer.disconnect();
+    };
+  }, [observer]);
+
+  const debouncedActiveTag = useCallback(debounce((value) => setCurrentTag(value), 500), []);
+
+  function debounce(func, delay) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
+
   function activeTag(e) {
-    setCurrentTag(e.target.value);
+    debouncedActiveTag(e.target.value);
     setCurrentPage(1); // Reset to first page when tag changes
   }
 
@@ -67,19 +98,14 @@ export default function Dashboard() {
     }
   }
 
-  // Calculate the index of the last image to display on the current page
   const indexOfLastImage = currentPage * imagesPerPage;
-  // Calculate the index of the first image to display on the current page
   const indexOfFirstImage = indexOfLastImage - imagesPerPage;
-  // Use the slice method to get the images for the current page
   const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
-  // Function to go to the previous page
   function previousPage() {
     setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
   }
 
-  // Function to go to the next page
   function nextPage() {
     setCurrentPage(prevPage => Math.min(prevPage + 1, Math.ceil(images.length / imagesPerPage)));
   }
@@ -108,7 +134,15 @@ export default function Dashboard() {
             <div key={index}>
               {image.type === currentTag || currentTag === 'All' ? (
                 <>
-                  <img className="img_element" src={image.url} alt={image._id} />
+                  <img
+                    className="img_element"
+                    src={image.url}
+                    data-src={image.url}
+                    alt={image._id}
+                    ref={(el) => {
+                      if (observer) observer.observe(el);
+                    }}
+                  />
                   <div className='actions'>
                     <p style={{ cursor: 'pointer' }} onClick={() => copyLinkToClipboard(image.url)}>
                       <CiLink style={{ color: 'white', fontSize: '1.4rem' }} />
@@ -128,7 +162,6 @@ export default function Dashboard() {
           <span>Page {currentPage} of {Math.ceil(images.length / imagesPerPage)}</span>
           <button className='arrow_button' onClick={nextPage} disabled={indexOfLastImage >= images.length}><FaArrowRight /></button>
         </div>
-
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Dashnavbar from '../components/dashNavbar';
+import imageCompression from 'browser-image-compression';
 
 export default function Upload() {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -16,7 +17,12 @@ export default function Upload() {
   const handleImagesUpload = async () => {
     setLoading(true);
     try {
-      const uploadPromises = selectedImages.map(async (image) => {
+      const compressedImages = await Promise.all(selectedImages.map(async (image) => {
+        const compressedImage = await compressImage(image);
+        return compressedImage;
+      }));
+
+      const uploadPromises = compressedImages.map(async (image) => {
         const formData = new FormData();
         formData.append('image', image);
         const response = await axios.post(
@@ -30,6 +36,7 @@ export default function Upload() {
         await sendImageURLToDatabase(imageUrl);
         return imageUrl;
       });
+
       const uploadedImagesUrls = await Promise.all(uploadPromises);
       // alert('Images uploaded successfully!');
       console.log('Uploaded Images URLs:', uploadedImagesUrls);
@@ -38,6 +45,16 @@ export default function Upload() {
       alert('An error occurred while uploading images. Please try again later.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const compressImage = async (image) => {
+    try {
+      const compressedImage = await imageCompression(image, { maxFileSizeMB: .5 });
+      return compressedImage;
+    } catch (error) {
+      console.error('Error compressing image:', error.message);
+      throw error;
     }
   };
 
