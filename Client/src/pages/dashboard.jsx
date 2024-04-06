@@ -17,7 +17,7 @@ export default function Dashboard() {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const endpoint = import.meta.env.VITE_DOMAIN_ENDPOINT;
   const tags = ['image', 'gif'];
-  const imagesPerPage = 21;
+  const imagesPerPage = 24;
 
   useEffect(() => {
     const fetchData = async () => {
