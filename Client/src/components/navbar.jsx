@@ -20,6 +20,7 @@ export default function Navbar() {
     <div className='navbar'>
         <div className='navbar_left'>
           <div className='bucket_container'>
+            <FaBucket className='bucket_logo' />
             <p>PIS Bucket</p>
           </div>
         </div>
