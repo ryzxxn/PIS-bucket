@@ -17,14 +17,16 @@ export default function Upload() {
   const handleImagesUpload = async () => {
     setLoading(true);
     try {
-      const compressedImages = await Promise.all(selectedImages.map(async (image) => {
-        const compressedImage = await compressImage(image);
-        return compressedImage;
-      }));
+      const uploadPromises = selectedImages.map(async (image) => {
+        let formData = new FormData();
+        
+        // Check if the file is a GIF
+        const isGif = image.type === 'image/gif';
 
-      const uploadPromises = compressedImages.map(async (image) => {
-        const formData = new FormData();
-        formData.append('image', image);
+        // If it's not a GIF, compress the image
+        const compressedImage = isGif ? image : await compressImage(image);
+
+        formData.append('image', compressedImage);
         const response = await axios.post(
           `https://api.imgbb.com/1/upload?key=${IMG_CLIENT_API_KEY}`,
           formData,
@@ -33,12 +35,11 @@ export default function Upload() {
           }
         );
         const imageUrl = response.data.data.url;
-        await sendImageURLToDatabase(imageUrl);
+        await sendImageURLToDatabase(imageUrl, image.type); // Pass file type to determine if it's a GIF
         return imageUrl;
       });
 
       const uploadedImagesUrls = await Promise.all(uploadPromises);
-      // alert('Images uploaded successfully!');
       console.log('Uploaded Images URLs:', uploadedImagesUrls);
     } catch (error) {
       console.error('Error uploading images:', error.message);
@@ -58,13 +59,13 @@ export default function Upload() {
     }
   };
 
-  const sendImageURLToDatabase = async (imageUrl) => {
+  const sendImageURLToDatabase = async (imageUrl, fileType) => {
     try {
       const saveImageDB = {
         date: new Date().toString(),
         url: imageUrl,
         email: sessionStorage.getItem('email'),
-        type: imageUrl.endsWith('.gif') ? 'gif' : 'image',
+        type: fileType === 'image/gif' ? 'gif' : 'image', // Determine the file type here
         uploaded_by: sessionStorage.getItem('Display_name'),
       };
       const response = await axios.post(`${endpoint}/upload`, saveImageDB);
