@@ -42,6 +42,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
+app.get('/pis-wake', (req, res) => {
+  res.send('true'); // Respond with 'true'
+});
+
 // Route to get all images
 app.get('/images', async (req, res, next) => {
   const { apikey, user, type } = req.query;
