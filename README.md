@@ -1,33 +1,36 @@
-# Personal Image Storage
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Overview
+## Getting Started
 
-This repository serves as a personal image storage solution. Initially, images were stored using a method that relied on dynamic URL generation for cached media. However, this approach proved futile due to the limitations and challenges posed by dynamic URL generation.
+First, run the development server:
 
-## Deployed Application
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-The application is deployed and can be accessed [here](https://pis.netlify.app/). Please note that the backend initialization may take around 40-50 seconds due to the free tier hosting on Render.com.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Why the Change?
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-### Previous Setup
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-The previous setup relied on a method that involved dynamic URL generation for cached media. However, this approach faced challenges and limitations, prompting the need for an alternative solution.
+## Learn More
 
-### Current Setup
+To learn more about Next.js, take a look at the following resources:
 
-The current solution aims to address the challenges posed by dynamic URL generation for cached media. It was possible to overcome this issue by utilizing a platform called img.BB, which allows caching of images through an API.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Technical Details
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-### Technologies Used
+## Deploy on Vercel
 
-- **Frontend:** React
-- **Backend:** Express
-- **Database:** MongoDB
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-### Challenges Faced
-
-1. **Limitations of Dynamic URL Generation:** The reliance on dynamic URL generation for cached media posed challenges and limitations, necessitating a shift to a more robust solution.
-
-2. **Transitioning to a Stable Solution:** Finding a stable and reliable solution to overcome the limitations of dynamic URL generation proved to be a significant challenge.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

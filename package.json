@@ -1,0 +1,19 @@
+{
+  "name": "pis",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "firebase": "^10.12.2",
+    "memory-state": "^1.0.9",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^6.23.1"
+  }
+}
