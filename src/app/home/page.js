@@ -34,7 +34,7 @@ export default function Home_page() {
         });
     }
 
-    console.log(userdata);
+    // console.log(userdata);
 
   return (
     <>

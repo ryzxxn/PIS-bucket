@@ -20,7 +20,7 @@ export default function Upload() {
         }
       }, []);
 
-      console.log(userdata)
+    //   console.log(userdata)
 
       function handleSignOut() {
         signOut(auth)
