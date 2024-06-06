@@ -11,6 +11,7 @@ export default function Upload() {
 
     const [userdata, setUserdata] = useState(null)
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [uploadComplete, setUploadComplete] = useState(false); // New state for upload completion
 
     useEffect(() => {
         const encryptedObject = sessionStorage.getItem(process.env.NEXT_PUBLIC_SESSION);
@@ -96,8 +97,7 @@ export default function Upload() {
           });
 
           const updateData = await updateResponse.json();
-
-          // setMedia(updatedMedia);
+          setUploadComplete(true); // Set upload completion state to true
         } catch (error) {
           console.error(error);
         }
@@ -128,6 +128,7 @@ export default function Upload() {
             onChange={handleFileChange}
           />
           <button onClick={handleUpload}>Upload</button>
+          {uploadComplete && <div>Upload complete</div>} {/* New div for upload completion */}
           <div style={{overflowY: 'scroll'}}>
           {userdata && userdata.media && userdata.media.map((image, index) => (
             <div key={index}>
