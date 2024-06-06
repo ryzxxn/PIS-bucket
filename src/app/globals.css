@@ -1,0 +1,18 @@
+.herobg{
+  background-color: red;
+  height: 100vh;
+  width: auto;
+  background-image: url(../../public/herobg.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.103);
+}
+
+body{
+  margin: 0px;
+}
+
+p{
+  margin: 0px;
+}
