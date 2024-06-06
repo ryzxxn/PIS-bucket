@@ -14,7 +14,7 @@ export default function Signup() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("User logged in:", user);
+        // console.log("User logged in:", user);
         const userData = {
           userName: user.displayName,
           userEmail: user.email,
@@ -27,7 +27,7 @@ export default function Signup() {
         // Check if the user exists in the database
         const userExists = await checkUserExistsInDb(user.uid);
         if (userExists) {
-          console.log("User exists in the database");
+          // console.log("User exists in the database");
           const encryptedUserData = CryptoJS.AES.encrypt(JSON.stringify(userData), process.env.NEXT_PUBLIC_SECRET_KEY).toString();
           sessionStorage.setItem(process.env.NEXT_PUBLIC_SESSION, encryptedUserData);
           router.push('/');
@@ -64,7 +64,7 @@ export default function Signup() {
         return false;
       }
     } catch (error) {
-      console.error("Error checking if user exists in DB:", error);
+      // console.error("Error checking if user exists in DB:", error);
       return false;
     }
   }

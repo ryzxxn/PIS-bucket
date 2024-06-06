@@ -43,7 +43,7 @@ export default function Dashboard() {
           router.push('/') // navigate to the home page
         })
         .catch((error) => {
-          console.error("Error logging out:", error);
+          // console.error("Error logging out:", error);
         });
     }
 

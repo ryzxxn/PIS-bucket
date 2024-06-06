@@ -71,7 +71,7 @@ export default function Upload() {
       
           const data = await response.json();
       
-          console.log(data);
+        //   console.log(data);
       
           const imageDetails = {
             url: data.data.url,
