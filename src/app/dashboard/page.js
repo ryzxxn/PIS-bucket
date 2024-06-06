@@ -26,7 +26,7 @@ export default function Dashboard() {
 
     const fetchMedia = async (userId) => {
       try {
-        const response = await fetch(`https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userId}/media.json`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userId}/media.json`);
         const data = await response.json();
         setMedia(data);
       } catch (error) {

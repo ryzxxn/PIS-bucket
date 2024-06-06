@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { auth, provider } from "../firebase";
-import { onAuthStateChanged, signInWithRedirect, signOut } from "firebase/auth";
-import Link from "next/link";
+import { onAuthStateChanged, signInWithRedirect } from "firebase/auth";
 import CryptoJS from "crypto-js";
 import { FaGoogle } from "react-icons/fa";
 
@@ -38,7 +37,7 @@ export default function Signup() {
             [user.uid]: userData
           };
           let response = await axios.post(
-            `https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userData.userId}.json`,
+            `${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userData.userId}.json`,
             newUserData
           );
           if (response.data) {
@@ -54,7 +53,7 @@ export default function Signup() {
   async function checkUserExistsInDb(uid) {
     try {
       const response = await axios.get(
-        `https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`
+        `${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${uid}.json`
       );
       const userData = response.data;
 

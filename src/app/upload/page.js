@@ -78,12 +78,12 @@ export default function Upload() {
             thumbUrl: data.data.thumb.url
           };
       
-          const mediaResponse = await fetch(`https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userdata.userId}/media.json`);
+          const mediaResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userdata.userId}/media.json`);
           const existingMedia = await mediaResponse.json();
       
           const updatedMedia = existingMedia ? [...existingMedia, imageDetails] : [imageDetails];
       
-          const updateResponse = await fetch(`https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userdata.userId}/media.json`, {
+          const updateResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userdata.userId}/media.json`, {
             method: 'PUT',
             body: JSON.stringify(updatedMedia)
           });
