@@ -10,7 +10,7 @@ import { auth } from '../firebase';
 export default function Upload() {
 
     const [userdata, setUserdata] = useState(null)
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
 
     useEffect(() => {
         const encryptedObject = sessionStorage.getItem(process.env.NEXT_PUBLIC_SESSION);
@@ -19,8 +19,6 @@ export default function Upload() {
           setUserdata(decryptedObject)
         }
       }, []);
-
-    //   console.log(userdata)
 
       function handleSignOut() {
         signOut(auth)
@@ -36,61 +34,70 @@ export default function Upload() {
       }
 
       const handleFileChange = (event) => {
-        const file = event.target.files[0];
+        const files = Array.from(event.target.files);
 
-        // Check if the file is an image
-        if (!file.type.startsWith('image/')) {
-          alert('Please select an image file');
-          return;
-        }
+        // Check if all files are images and smaller than 32MB
+        const validFiles = files.filter((file) => {
+          if (!file.type.startsWith('image/')) {
+            alert('Please select image files only');
+            return false;
+          }
 
-        // Check if the file is larger than 32MB
-        if (file.size > 32 * 1024 * 1024) {
-          alert('File size is too large. Please select a file smaller than 32MB');
-          return;
-        }
+          if (file.size > 32 * 1024 * 1024) {
+            alert('File size is too large. Please select files smaller than 32MB');
+            return false;
+          }
 
-        setSelectedFile(file);
+          return true;
+        });
+
+        setSelectedFiles(validFiles);
       };
 
       const handleUpload = async () => {
-        if (!selectedFile) {
-          alert('Please select a file to upload');
+        if (selectedFiles.length === 0) {
+          alert('Please select files to upload');
           return;
         }
-      
-        const formData = new FormData();
-        formData.append('key', process.env.NEXT_PUBLIC_IBB_API_KEY);
-        formData.append('image', selectedFile);
-      
+
+        const mediaResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userdata.userId}/media.json`);
+        const existingMedia = await mediaResponse.json();
+
+        const updatedMedia = existingMedia ? [...existingMedia] : [];
+
+        for (const file of selectedFiles) {
+          const formData = new FormData();
+          formData.append('key', process.env.NEXT_PUBLIC_IBB_API_KEY);
+          formData.append('image', file);
+
+          try {
+            const response = await fetch('https://api.imgbb.com/1/upload', {
+              method: 'POST',
+              body: formData
+            });
+
+            const data = await response.json();
+
+            const imageDetails = {
+              url: data.data.url,
+              thumbUrl: data.data.thumb.url
+            };
+
+            updatedMedia.push(imageDetails);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
         try {
-          const response = await fetch('https://api.imgbb.com/1/upload', {
-            method: 'POST',
-            body: formData
-          });
-      
-          const data = await response.json();
-      
-        //   console.log(data);
-      
-          const imageDetails = {
-            url: data.data.url,
-            thumbUrl: data.data.thumb.url
-          };
-      
-          const mediaResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userdata.userId}/media.json`);
-          const existingMedia = await mediaResponse.json();
-      
-          const updatedMedia = existingMedia ? [...existingMedia, imageDetails] : [imageDetails];
-      
           const updateResponse = await fetch(`${process.env.NEXT_PUBLIC_DB_DOMAIN}/users/${userdata.userId}/media.json`, {
             method: 'PUT',
             body: JSON.stringify(updatedMedia)
           });
-      
+
           const updateData = await updateResponse.json();
-      
-        //   setMedia(updatedMedia);
+
+          // setMedia(updatedMedia);
         } catch (error) {
           console.error(error);
         }
@@ -117,6 +124,7 @@ export default function Upload() {
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleFileChange}
           />
           <button onClick={handleUpload}>Upload</button>
