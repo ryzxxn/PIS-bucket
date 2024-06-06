@@ -128,15 +128,7 @@ export default function Upload() {
             onChange={handleFileChange}
           />
           <button onClick={handleUpload}>Upload</button>
-          {uploadComplete && <div>Upload complete</div>} {/* New div for upload completion */}
-          <div style={{overflowY: 'scroll'}}>
-          {userdata && userdata.media && userdata.media.map((image, index) => (
-            <div key={index}>
-            <img src={image.thumbUrl} alt={`Uploaded image ${index}`} />
-            <p>{image.url}</p>
-            </div>
-        ))}
-          </div>
+          {uploadComplete && <div style={{color: 'white'}}>Upload complete</div>} {/* New div for upload completion */}
         </div>
       </div>
     </div>
