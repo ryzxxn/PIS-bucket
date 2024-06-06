@@ -1,15 +1,16 @@
 "use client";
-import { useEffect, useState, } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { auth, provider } from "../firebase";
 import { onAuthStateChanged, signInWithRedirect, signOut } from "firebase/auth";
 import Link from "next/link";
 import CryptoJS from "crypto-js";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Signup() {
   const router = useRouter();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -29,16 +30,19 @@ export default function Signup() {
         if (userExists) {
           console.log("User exists in the database");
           const encryptedUserData = CryptoJS.AES.encrypt(JSON.stringify(userData), process.env.NEXT_PUBLIC_SECRET_KEY).toString();
-          sessionStorage.setItem(process.env.NEXT_PUBLIC_SESSION, encryptedUserData)
-          router.push('/')
+          sessionStorage.setItem(process.env.NEXT_PUBLIC_SESSION, encryptedUserData);
+          router.push('/');
           // Perform additional actions if the user exists in the database
         } else {
+          const newUserData = {
+            [user.uid]: userData
+          };
           let response = await axios.post(
-            `https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${user.uid}.json`,
-            userData
+            `https://pis-image-default-rtdb.asia-southeast1.firebasedatabase.app/users/${userData.userId}.json`,
+            newUserData
           );
           if (response.data) {
-            router.push('/')
+            router.push('/');
           }
         }
       }
@@ -70,32 +74,14 @@ export default function Signup() {
     signInWithRedirect(auth, provider);
   }
 
-  function handleSignOut() {
-    signOut(auth)
-      .then(() => {
-        console.log("User logged out");
-        sessionStorage.removeItem(process.env.NEXT_PUBLIC_SESSION)
-      })
-      .catch((error) => {
-        console.error("Error logging out:", error);
-      });
-  }
 
   return (
-    <>
-      <button onClick={handleSignOut}>Sign out</button>
-      <p onClick={handleSignIn} className="google_button" style={{ cursor: "pointer" }}>
-        Sign up with Google
+      <>
+    <div className='herobg' style={{display: 'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <p onClick={handleSignIn} className="google_button" style={{ cursor: "pointer", color: 'black' , backgroundColor: 'white' ,height: 'max-content',width: 'max-content', padding: '1rem', borderRadius: '.7rem', display: 'flex', alignItems: 'center', gap: '1rem'}}>
+      <FaGoogle />Sign up with Google
       </p>
-
-      <ul>
-        <li>
-          <Link href="/">HOME</Link>
-        </li>
-        <li>
-          <Link href="/signup">SIGNUP</Link>
-        </li>
-      </ul>
+    </div>
     </>
   );
 }
