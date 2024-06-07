@@ -92,12 +92,12 @@ export default function Dashboard() {
         </div>
         <div style={{ display: 'flex', flex: 1, padding: '0rem 2rem', justifyContent: 'center' }}>
           <div className='image_container' style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '.5rem .5rem', justifyContent: 'center', alignItems: 'start', width: 'max-content' }}>
-            <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'space-evenly' }}>
+            <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'start' }}>
               {media && Object.values(media).length > 0 ? (
                 Object.values(media).map((image, index) => (
                   <div key={index}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <img src={image.thumbUrl} alt={`Uploaded image ${index}`} style={{ height: '8rem' }} />
+                      <img src={image.thumbUrl} alt={`Uploaded image ${index}`} style={{ height: '7rem' }} />
                       <div style={{ display: 'flex' }}>
                         <CiLink onClick={() => handleCopyUrl(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
                         <MdDelete onClick={() => handleDeleteImage(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
