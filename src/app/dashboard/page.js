@@ -23,6 +23,9 @@ export default function Dashboard() {
       setUserdata(decryptedObject)
       fetchMedia(decryptedObject.userId);
     }
+    else{
+      router.push('/')
+    }
   }, []);
 
   const fetchMedia = async (userId) => {
