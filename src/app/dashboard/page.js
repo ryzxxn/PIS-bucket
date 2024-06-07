@@ -9,6 +9,7 @@ import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { CiLink } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
+import Image from 'next/image'
 
 export default function Dashboard() {
 
@@ -100,7 +101,14 @@ export default function Dashboard() {
                 Object.values(media).map((image, index) => (
                   <div key={index}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <img src={image.thumbUrl} alt={`Uploaded image ${index}`} style={{ height: '7rem' }} />
+                    <Image
+                      src={image.thumbUrl}
+                      alt={``}
+                      width={100} // replace with your desired width
+                      height={100} // replace with your desired height
+                      quality={1}
+                      priority={false}
+                    />
                       <div style={{ display: 'flex' }}>
                         <CiLink onClick={() => handleCopyUrl(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
                         <MdDelete onClick={() => handleDeleteImage(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
