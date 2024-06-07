@@ -65,7 +65,7 @@ export default function Dashboard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Image deleted successfully:', data);
+        // console.log('Image deleted successfully:', data);
         // Update the state with the new media array
         setMedia(updatedMedia);
       })
