@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { CiLink } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Image from 'next/image'
+import { IoImageSharp } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function Dashboard() {
 
@@ -54,7 +56,6 @@ export default function Dashboard() {
 
   const handleCopyUrl = (url) => {
     navigator.clipboard.writeText(url);
-    alert(`Copied ${url} to clipboard`);
   };
 
   const handleDeleteImage = (imageUrl) => {
@@ -85,6 +86,10 @@ export default function Dashboard() {
           <div style={{ display: 'flex', justifyContent: 'end', padding: '.8rem 1rem', alignItems: 'center' }}>
             {userdata ? (
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.6rem' }}>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <IoImageSharp style={{ color: 'white', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem'}}  />
+                  <p style={{color: 'white'}}>{media.length}</p>
+                </div>
                 <Link href="/upload" style={{ color: 'white', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MdFileUpload style={{ fontSize: '1.4rem' }} /></Link>
                 <button onClick={handleSignOut} style={{ color: 'white', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IoIosLogOut style={{ fontSize: '1.4rem' }} /></button>
                 <img src={userdata.userImage} alt='' style={{ borderRadius: '50%', maxHeight: '2.5rem', width: 'auto' }}></img>
@@ -95,15 +100,15 @@ export default function Dashboard() {
           </div>
         </div>
         <div style={{ display: 'flex', flex: 1, padding: '0rem 2rem', justifyContent: 'center' }}>
-          <div className='image_container' style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '.5rem .5rem', justifyContent: 'center', alignItems: 'start', width: 'max-content' }}>
-            <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'start' }}>
+          <div className='image_container' style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '.5rem .5rem', justifyContent: 'center', alignItems: 'center', width: 'max-content' }}>
+            <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
               {media && Object.values(media).length > 0 ? (
                 Object.values(media).map((image, index) => (
                   <div key={index}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Image
                       src={image.thumbUrl}
-                      alt={``}
+                      alt={<AiOutlineLoading3Quarters />}
                       width={100} // replace with your desired width
                       height={100} // replace with your desired height
                       quality={1}
