@@ -12,11 +12,15 @@ import { MdDelete } from "react-icons/md";
 import Image from 'next/image'
 import { IoImageSharp } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { GrFormNext } from "react-icons/gr";
+import { GrFormPrevious } from "react-icons/gr";
 
 export default function Dashboard() {
 
   const [userdata, setUserdata] = useState(null)
   const [media, setMedia] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const imagesPerPage = 20; // adjust this value as needed
   const router = useRouter()
 
   useEffect(() => {
@@ -79,10 +83,33 @@ export default function Dashboard() {
       });
   };
 
+  // Calculate the index of the first and last image to display
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = media.slice(indexOfFirstImage, indexOfLastImage);
+
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Function to handle next and previous buttons
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(media.length / imagesPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <>
       <div className='herobg' style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll', flex: '1' }}>
-        <div className='navbar'>
+        <div className='navbar' style={{position: 'sticky',top: '0px', backgroundColor: 'rgb(24, 24, 24)'}}>
           <div style={{ display: 'flex', justifyContent: 'end', padding: '.8rem 1rem', alignItems: 'center' }}>
             {userdata ? (
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.6rem' }}>
@@ -99,11 +126,22 @@ export default function Dashboard() {
             )}
           </div>
         </div>
+
+        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: '1rem', margin: '1rem' }}>
+          <button onClick={handlePrevPage} disabled={currentPage === 1} style={{backgroundColor: 'transparent', border: 'none',  color: 'white', fontSize: '1.6rem'}}>
+          <GrFormPrevious />
+          </button>
+          {/* Add your pagination component here */}
+          <button onClick={handleNextPage} disabled={currentPage === Math.ceil(media.length / imagesPerPage)} style={{backgroundColor: 'transparent', border: 'none',  color: 'white', fontSize: '1.6rem'}}>
+          <GrFormNext />
+          </button>
+        </div>
+
         <div style={{ display: 'flex', flex: 1, padding: '0rem 2rem', justifyContent: 'center' }}>
           <div className='image_container' style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '.5rem .5rem', justifyContent: 'center', alignItems: 'center', width: 'max-content' }}>
             <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
-              {media && Object.values(media).length > 0 ? (
-                Object.values(media).map((image, index) => (
+              {media && currentImages.length > 0 ? (
+                currentImages.map((image, index) => (
                   <div key={index}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Image
@@ -126,6 +164,15 @@ export default function Dashboard() {
               )}
             </div>
           </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', margin: '1rem' }}>
+          <button onClick={handlePrevPage} disabled={currentPage === 1} style={{backgroundColor: 'transparent', border: 'none',  color: 'white', fontSize: '1.6rem'}}>
+          <GrFormPrevious />
+          </button>
+          {/* Add your pagination component here */}
+          <button onClick={handleNextPage} disabled={currentPage === Math.ceil(media.length / imagesPerPage)} style={{backgroundColor: 'transparent', border: 'none',  color: 'white', fontSize: '1.6rem'}}>
+          <GrFormNext />
+          </button>
         </div>
       </div>
     </>

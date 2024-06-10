@@ -123,58 +123,16 @@ export default function Upload() {
   return (
     <div className="herobg" style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="navbar">
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'end',
-            padding: '.8rem 1rem',
-            alignItems: 'center',
-          }}
-        >
+        <div style={{display: 'flex',justifyContent: 'end',padding: '.8rem 1rem',alignItems: 'center',}}>
           {userdata ? (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '.6rem',
-              }}
-            >
-              <Link
-                href="/dashboard"
-                style={{
-                  color: 'white',
-                  textDecoration: 'none',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+            <div style={{display: 'flex',alignItems: 'center',justifyContent: 'center',gap: '.6rem',}}>
+              <Link href="/dashboard"style={{color: 'white',textDecoration: 'none',background: 'none',border: 'none',cursor: 'pointer',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
                 <IoMdHome style={{ fontSize: '1.4rem' }} />
               </Link>
-              <button
-                onClick={handleSignOut}
-                style={{
-                  color: 'white',
-                  textDecoration: 'none',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <button onClick={handleSignOut}style={{color: 'white',textDecoration: 'none',background: 'none',border: 'none',cursor: 'pointer',display: 'flex',alignItems: 'center',justifyContent: 'center',}}>
                 <IoIosLogOut style={{ fontSize: '1.4rem' }} />
               </button>
-              <img
-                src={userdata.userImage}
-                alt=""
-                style={{ borderRadius: '50%', maxHeight: '2.5rem', width: 'auto' }}
-              ></img>
+              <img src={userdata.userImage}alt=""style={{ borderRadius: '50%', maxHeight: '2.5rem', width: 'auto' }}></img>
             </div>
           ) : (
             <Link href="/signup" style={{ color: 'white', fontSize: '1.2rem', textDecoration: 'none' }}>
@@ -183,51 +141,10 @@ export default function Upload() {
           )}
         </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flex: 1,
-          padding: '0rem 0rem',
-          alignItems: 'center',
-          justifyContent: 'start',
-          flexDirection: 'column',
-        }}
-      >
-        <div
-          className="input_module"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-            style={{
-              outline: '2px dotted white',
-              padding: '2rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '1rem',
-            }}
-          />
-          <button
-            onClick={handleUpload}
-            style={{
-              width: 'max-content',
-              color: 'white',
-              backgroundColor: 'transparent',
-              border: 'none',
-              fontSize: '2rem',
-            }}
-            disabled={isUploading} // Disable button while uploading
-          >
+      <div style={{display: 'flex',flex: '1',padding: '0rem 0rem',alignItems: 'center',justifyContent: 'start',flexDirection: 'column',overflowY: 'hidden',height: '100%'}}>
+        <div className="input_module" style={{display: 'flex', padding: '1rem 0rem', flexDirection: 'column', gap: '1rem', justifyContent: 'center', alignItems: 'center'}}>
+          <input type="file" accept="image/*" multiple onChange={handleFileChange} style={{outline: '2px dotted white',padding: '2rem',display: 'flex',alignItems: 'center',justifyContent: 'center',borderRadius: '1rem',}}/>
+          <button onClick={handleUpload} style={{width: 'max-content',color: 'white',backgroundColor: 'transparent',border: 'none',fontSize: '2rem',}} disabled={isUploading}>
             {isUploading ? (
               <AiOutlineLoading className="rotate-animation" /> // Show loader with rotation animation
             ) : (
@@ -238,34 +155,12 @@ export default function Upload() {
 
         {/* Display selected file previews */}
         {selectedFiles && (
-          <div
-          style={{
-            display: 'flex',
-            gap: '1rem',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-            backgroundColor: 'rgb(0, 0, 0, 0.200)',
-            padding: '1rem',
-            borderRadius: '1rem',
-            margin: '0rem 1rem',
-          }}
-        >
+          <div style={{display: 'flex',gap: '1rem',flexWrap: 'wrap',justifyContent: 'space-evenly',backgroundColor: 'rgb(0, 0, 0, 0.200)',padding: '1rem',borderRadius: '1rem',margin: '0rem 1rem',overflowY: 'scroll',height: 'max-content'}}>
           {selectedFiles.map((file, index) => (
             <div key={index} style={{ position: 'relative' }}>
-              <img
-                src={URL.createObjectURL(file)}
-                alt={`Preview ${index}`}
-                style={{ maxWidth: '100px', maxHeight: '100px' }}
-              />
+              <img src={URL.createObjectURL(file)} alt={`Preview ${index}`} style={{ maxWidth: '100px', maxHeight: '100px' }}/>
               {uploadedFiles.includes(file) && (
-                <FaCheckCircle
-                  style={{
-                    position: 'absolute',
-                    top: '5px',
-                    right: '5px',
-                    color: 'green',
-                  }}
-                />
+                <FaCheckCircle style={{position: 'absolute',top: '5px',right: '5px',color: 'green',}}/>
               )}
             </div>
           ))}
