@@ -165,7 +165,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', margin: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', gap: '1rem', margin: '1rem' }}>
           <button onClick={handlePrevPage} disabled={currentPage === 1} style={{backgroundColor: 'transparent', border: 'none',  color: 'white', fontSize: '1.6rem'}}>
           <GrFormPrevious />
           </button>
