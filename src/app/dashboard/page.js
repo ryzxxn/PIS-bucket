@@ -141,17 +141,17 @@ export default function Dashboard() {
           <div className='image_container' style={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '.5rem .5rem', justifyContent: 'center', alignItems: 'center', width: 'max-content' }}>
             <div style={{ width: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
               {media && currentImages.length > 0 ? (
-                currentImages.map((image, index) => (
+                currentImages.slice().reverse().map((image, index) => (
                   <div key={index}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Image
-                      src={image.thumbUrl}
-                      alt={<AiOutlineLoading3Quarters />}
-                      width={100} // replace with your desired width
-                      height={100} // replace with your desired height
-                      quality={1}
-                      priority={false}
-                    />
+                      <Image
+                        src={image.thumbUrl}
+                        alt={<AiOutlineLoading3Quarters />}
+                        width={100} // replace with your desired width
+                        height={100} // replace with your desired height
+                        quality={1}
+                        priority={false}
+                      />
                       <div style={{ display: 'flex' }}>
                         <CiLink onClick={() => handleCopyUrl(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
                         <MdDelete onClick={() => handleDeleteImage(image.url)} style={{ color: 'white', fontSize: '1.2rem' }} />
